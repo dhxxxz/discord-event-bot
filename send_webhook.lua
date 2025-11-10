@@ -26,6 +26,8 @@ local schedule = {
     ["02:00"] = {"Paintball"},
 }
 
+local json = require("dkjson")
+
 local function sendWebhook(eventName)
     local data = {
         username = "Xin Town",
@@ -34,22 +36,19 @@ local function sendWebhook(eventName)
             title = "**กิจกรรมเริ่มแล้ว!**",
             description = "**" .. eventName .. "**",
             color = 0x00FFAA,
-            footer = {
-                text = "By Xin Town",
-                icon_url = "https://media.discordapp.net/attachments/1154821518799405088/1239638571149820048/XIN_OFFICIAL_2.1.png"
-            },
+            footer = { text = "By Xin Town" },
             timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
         }},
     }
 
-    local json = require("dkjson")
     local body = json.encode(data)
-
     os.execute(string.format(
         'curl -H "Content-Type: application/json" -X POST -d \'%s\' "%s"',
         body, url
     ))
 end
+
+sendWebhook("สคริปต์เริ่มทำงานแล้ว")
 
 while true do
     local currentTime = os.date("%H:%M")
