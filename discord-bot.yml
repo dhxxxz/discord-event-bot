@@ -1,0 +1,22 @@
+name: Discord Event Bot
+
+on:
+  schedule:
+    - cron: "*/1 * * * *"
+  workflow_dispatch:
+
+jobs:
+  run-lua:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Lua and dkjson
+        run: |
+          sudo apt update
+          sudo apt install -y lua5.3 luarocks
+          luarocks install dkjson
+
+      - name: Run Lua script
+        run: lua5.3 send_webhook.lua
